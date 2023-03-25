@@ -99,6 +99,7 @@ const Home = () => {
                     <p align="center">Donate a portion of your day to others</p>
                 </div>
             </div>
+            
         </div>
     )
 }

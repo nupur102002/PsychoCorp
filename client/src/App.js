@@ -6,9 +6,10 @@ import {reducer,initialState} from './reducers/userReducer'
 import Navbar from "./components/Navbar"
 import Home from "./components/screens/Home"
 import SignIn from "./components/screens/Login"
-import Profile from "./components/screens/Profile"
 import SignUp from "./components/screens/Signup"
-import CreatePost from "./components/screens/CreatePost"
+import Footer from "./components/Footer"
+
+
 export const UserContext = createContext()
 
 
@@ -46,7 +47,7 @@ function App() {
     <BrowserRouter>
       <Navbar />
       <Routing />  
-     
+      <Footer />
     </BrowserRouter>
     </UserContext.Provider>
   );
