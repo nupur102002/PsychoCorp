@@ -34,7 +34,7 @@ const DocReset  = ()=>{
    return (
       <div className="mycard">
           <div className="card auth-card input-field">
-            <h2>Healthy</h2>
+            <h2>PsychoCorp</h2>
             <input
             type="text"
             placeholder="email"
