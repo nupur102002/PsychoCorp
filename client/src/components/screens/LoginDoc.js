@@ -5,7 +5,7 @@
   import Logo from "../logo";
   import M from "materialize-css"
 
-const Login=()=>{
+const LoginDoc=()=>{
   const {state,dispatch} = useContext(UserContext)
   const navigate = useNavigate();        /*instead of useHistory */
   const [password,setPassword]=useState("")
@@ -17,7 +17,7 @@ const Login=()=>{
         M.toast({html:"invalid email",classes:"#c62828 red darken-3"})
         return 
     }
-    fetch("/login",{
+    fetch("/loginDoc",{
       method:"post",
       headers:{
           "Content-Type":"application/json"
@@ -33,10 +33,11 @@ const Login=()=>{
       M.toast({html:data.error,classes:"#c62828 red darken-3"})
      }
      else {
+      console.log(data)
       localStorage.setItem("jwt",data.token)
       localStorage.setItem("user",JSON.stringify(data.user))
       M.toast({html:"success",classes:"#43a047 green darken-1"})
-      navigate('/');
+      navigate('/doctor');
       window.location.reload();
      }
   }).catch(err=>{
@@ -46,12 +47,10 @@ const Login=()=>{
     
 }
     return (
-        <div className="mycard ">
+        <div className="mycard">
          <div className="card auth-card input-field bg-body size">
-        
-         
-            <h2 >Healthy</h2>
-            <br/><br/>
+         <h2 >Healthy</h2>
+         <br/><br/>
             <input
             className="ip"
             
@@ -74,14 +73,14 @@ const Login=()=>{
               Login
                  </button>
                    <br/><br/>
-            <h5 >
-                <Link to="/signup">Dont have an account ?</Link>
-                <br/><br/>
-                <Link to="/reset">Forgot Password ?</Link>
+            <h5>
+                <Link to="/signupDoc">Dont have an account ?</Link>
+                <br/>
+                <Link to="/docreset">Forgot Password ?</Link>
             </h5>
             </div>
       </div>
     )
 }
 
-export default Login;
+export default LoginDoc;

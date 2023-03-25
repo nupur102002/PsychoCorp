@@ -37,3 +37,19 @@ a{
   height: max-content;
   margin: 26px auto;
 }
+
+/* Logo */
+.logo-holder{
+  display: flex;
+  justify-content: center;
+  margin-top: 45px;
+}
+.logo{
+  width: 100px;
+  height: 100px;
+  border: solid white 2px;
+  border-radius: 70%;
+  display: grid;
+  place-items: center; 
+  font-size: 5rem;
+}

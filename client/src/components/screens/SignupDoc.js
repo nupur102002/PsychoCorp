@@ -1,16 +1,22 @@
-import React ,{useState,useEffect} from "react";
+import React ,{useState,useEffect,useRef} from "react";
 import {Link,useNavigate} from "react-router-dom"
 import M from "materialize-css"
 import Logo from "../logo";
-const Signup=()=>{
+const SignupDoc=()=>{
 
     const navigate = useNavigate();        /*instead of useHistory */
     const [name,setName]=useState("")
     const [password,setPassword]=useState("")
     const [email,setEmail]=useState("")
+    const [body,setBody]=useState("")
+    const [licId,setlicId]=useState("")
     const [image,setImage] = useState("")
     const [url,setUrl] = useState(undefined)
-    
+    const [type, setType] = useState("")
+    const typeselect = useRef(null)
+    useEffect(() => {
+      M.FormSelect.init(typeselect.current)
+    }, [])
     useEffect(()=>{
         if(url){
             uploadFields()
@@ -39,15 +45,18 @@ const Signup=()=>{
             M.toast({html: "invalid email",classes:"#c62828 red darken-3"})
             return
         }
-        fetch("/signup",{
+        fetch("/signupDoc",{
             method:"post",
             headers:{
                 "Content-Type":"application/json"
             },
             body:JSON.stringify({
                 name,
-                password,
+                licId,
                 email,
+                password,
+                body,
+                type ,
                 pic:url
             })
         }).then(res=>res.json())
@@ -57,7 +66,7 @@ const Signup=()=>{
            }
            else{
                M.toast({html:data.message,classes:"#43a047 green darken-1"})
-               navigate('/login')
+               navigate('/loginDoc')
            }
         }).catch(err=>{
             console.log(err)
@@ -73,8 +82,8 @@ const Signup=()=>{
     return  (
         <div className="mycard">
  <div className="card auth-card input-field bg-body">
-              <Logo/>
-            <h2>Zaayka</h2>
+              
+            <h2>Healthy</h2>
               <input
               className="ip"
               type="text"
@@ -82,6 +91,14 @@ const Signup=()=>{
               value={name}
               onChange={(e)=>setName(e.target.value)}
               />
+             <input
+            className="ip"
+            
+            type="text"
+            placeholder="License Id"  
+            value={licId}
+              onChange={(e)=>setlicId(e.target.value)}          
+            />
              <input
             className="ip"
             
@@ -97,7 +114,26 @@ const Signup=()=>{
             value={password }
               onChange={(e)=>setPassword(e.target.value)}
             />
-           
+            <input
+             className="ip"
+        type="text"
+        placeholder="Bio"
+        value={body}
+        onChange={(e) => setBody(e.target.value)}
+      />
+      <div className="input-field col s12">
+        <select ref={typeselect} value={type} onChange={(e) => setType(e.target.value)}>
+          <option value="" disabled defaultValue>specialization </option>
+          <option value="1">Addiction</option>
+          <option value="2">Anxiety</option>
+          <option value="3">Depression</option>
+          <option value="4">HIV/AIDS</option>
+          <option value="5">Marriage/Family</option>
+          <option value="6">OCD</option>
+          <option value="7">Teen</option>
+          <option value="8">LGBTQ</option>
+        </select>
+      </div>
                 <div className="file-field input-field">
             <div className="btn #64b5f6 blue darken-1">
                 <span>Upload pic</span>
@@ -111,7 +147,7 @@ const Signup=()=>{
                   SignUP
               </button>
               <h5>
-                  <Link to="/login">Already have an account ?</Link>
+                  <Link to="/loginDoc">Already have an account ?</Link>
               </h5>
    
           </div>
@@ -120,4 +156,4 @@ const Signup=()=>{
 
 }
 
-export default Signup;
+export default SignupDoc;
