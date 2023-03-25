@@ -10,6 +10,46 @@ const Doctor = () => {
 
 
 
+useEffect(()=>{
+    if(image){
+     const data = new FormData()
+     data.append("file",image)
+     data.append("upload_preset","zaayka")
+     data.append("cloud_name","dkp8phxth")
+     fetch("https://api.cloudinary.com/v1_1/dkp8phxth/image/upload",{
+         method:"post",
+         body:data
+     })
+     .then(res=>res.json())
+     .then(data=>{
+ 
+    
+        fetch('/doc/updatepic',{
+            method:"put",
+            headers:{
+                "Content-Type":"application/json",
+                "Authorization":"Bearer "+localStorage.getItem("jwt")
+            },
+            body:JSON.stringify({
+                pic:data.url
+            })
+        }).then(res=>res.json())
+        .then(result=>{
+            console.log(result)
+            localStorage.setItem("user",JSON.stringify({...state,pic:result.pic}))
+            dispatch({type:"UPDATEPIC",payload:result.pic})
+            window.location.reload()
+        })
+    
+     })
+     .catch(err=>{
+         console.log(err)
+     })
+    }
+ },[image])
+ const updatePhoto = (file)=>{
+     setImage(file)
+ }
 
 return (
    <div>
