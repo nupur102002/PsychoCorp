@@ -8,7 +8,28 @@ const requireLogin = require("../middleware/requireLogin");
 const Doctor = mongoose.model("Doctor");
 const User = mongoose.model("User");
 
+///unfollow the doctor
+router.put('/unfollow',requireLogin,(req,res)=>{
+    Doctor.findByIdAndUpdate(req.body.unfollowId,{
+        $pull:{followers:req.user._id}
+    },{
+        new:true
+    },(err,result1)=>{
+        if(err){
+            return res.status(422).json({error:err})
+        }
+      User.findByIdAndUpdate(req.user._id,{
+          $pull:{following:req.body.unfollowId}
+          
+      },{new:true}).select("-password").then(result2=>{
+          res.json({result1,result2})
+      }).catch(err=>{
+          return res.status(422).json({error:err})
+      })
 
+    }
+    )
+})
 /// user follow the doctor
 router.put('/follow',requireLogin,(req,res)=>{
     Doctor.findByIdAndUpdate(req.body.followId,{
