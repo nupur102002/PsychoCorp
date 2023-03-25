@@ -1,8 +1,6 @@
 import React,{useEffect,useState,useContext}  from "react";
 import { UserContext } from "../../App";
 import {Params, useParams} from "react-router-dom";
-import {DefaultPlayer as Video} from "react-html5video"
-import "react-html5video/dist/styles.css"
 
 const Profile=()=>{
     const [docProfile,setProfile] = useState(null)

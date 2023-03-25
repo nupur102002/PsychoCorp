@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { UserContext } from "../../App";
+import {Row,Col} from "antd"
 
 const Profile = () => {
     const [mypics, setPics] = useState([])
@@ -98,14 +99,18 @@ const Profile = () => {
             </div>
 
             {/* for pic uploaded part */}
-            <div className="gallery">
-                {
-                    mypics.map(item => {
+            <div>
+                <Row justify="center mt-1" gutter={16}>
+                    {mypics.map((item) => {
                         return (
-                            <img src={item.photo} alt={item.title} />
-                        )
-                    })
-                }
+                            <Col lg={5} sm={24} xs={24}>
+                                <div className="car p-2 bs1 mt-3">
+                                    <div style={{width:"100px"}}><img style={{width:"100%"}} src={item.photo} alt="a doctor" className="carimg" /></div>
+                                </div>
+                            </Col>   
+                        );
+                    })}
+                </Row>
             </div>
         </div>
     )
