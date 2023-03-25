@@ -131,4 +131,103 @@ router.put("/comment",requireLogin,(req,res)=>{
         }
     })
   })
+
+  //get addiction success stories
+router.get('/getaddiction',requireLogin,(req,res)=>{         
+    Story.find({ category:1})          
+    .populate("postedBy","_id name")
+    .populate("comments.postedBy","_id name")
+    .sort('-createdAt')
+    .then(stories=>{
+        res.json({stories})
+    })
+    .catch(err=>{
+        console.log(err)
+    })
+})
+
+//get anxiety success stories
+router.get('/getanxiety',requireLogin,(req,res)=>{         
+    Story.find({ category:2})          
+    .populate("postedBy","_id name")
+    .populate("comments.postedBy","_id name")
+    .sort('-createdAt')
+    .then(stories=>{
+        res.json({stories})
+    })
+    .catch(err=>{
+        console.log(err)
+    })
+})
+
+//get depression success stories
+router.get('/getdepression',requireLogin,(req,res)=>{         
+    Story.find({ category:3})          
+    .populate("postedBy","_id name")
+    .populate("comments.postedBy","_id name")
+    .sort('-createdAt')
+    .then(stories=>{
+        res.json({stories})
+    })
+    .catch(err=>{
+        console.log(err)
+    })
+})
+
+//get hiv success stories
+router.get('/gethiv',requireLogin,(req,res)=>{         
+    Story.find({ category:4})          
+    .populate("postedBy","_id name")
+    .populate("comments.postedBy","_id name")
+    .sort('-createdAt')
+    .then(stories=>{
+        res.json({stories})
+    })
+    .catch(err=>{
+        console.log(err)
+    })
+})
+
+//get family success stories
+router.get('/getfamily',requireLogin,(req,res)=>{         
+    Story.find({ category:5})          
+    .populate("postedBy","_id name")
+    .populate("comments.postedBy","_id name")
+    .sort('-createdAt')
+    .then(stories=>{
+        res.json({stories})
+    })
+    .catch(err=>{
+        console.log(err)
+    })
+})
+
+//get ocd success stories
+router.get('/getocd',requireLogin,(req,res)=>{         
+    Story.find({ category:6})          
+    .populate("postedBy","_id name")
+    .populate("comments.postedBy","_id name")
+    .sort('-createdAt')
+    .then(stories=>{
+        res.json({stories})
+    })
+    .catch(err=>{
+        console.log(err)
+    })
+})
+
+//get teen success stories
+router.get('/getteen',requireLogin,(req,res)=>{         
+    Story.find({ category:7})          
+    .populate("postedBy","_id name")
+    .populate("comments.postedBy","_id name")
+    .sort('-createdAt')
+    .then(stories=>{
+        res.json({stories})
+    })
+    .catch(err=>{
+        console.log(err)
+    })
+})
+
 module.exports=router;
