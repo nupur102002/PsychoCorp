@@ -97,4 +97,100 @@ router.put('/rating',requireLogin,(req,res)=>{
          res.json(result)
     })
 })
+
+//get addiction doctors
+router.get('/getaddictiondoc',requireLogin,(req,res)=>{         
+    Doctor.find({ specialization:1})          
+    .select("-password")
+    .then(doctors=>{
+        res.json({doctors})
+    })
+    .catch(err=>{
+        console.log(err)
+    })
+})
+
+//get anxiety doctors
+router.get('/getanxietydoc',requireLogin,(req,res)=>{         
+    Doctor.find({ specialization:2})          
+    .select("-password")
+    .then(doctors=>{
+        res.json({doctors})
+    })
+    .catch(err=>{
+        console.log(err)
+    })
+})
+
+//get depression doctors
+router.get('/getdepressiondoc',requireLogin,(req,res)=>{         
+    Doctor.find({ specialization:3})          
+    .select("-password")
+    .then(doctors=>{
+        res.json({doctors})
+    })
+    .catch(err=>{
+        console.log(err)
+    })
+})
+
+// get hiv doctors
+router.get('/gethivdoc',requireLogin,(req,res)=>{         
+    Doctor.find({ specialization:4})          
+    .select("-password")
+    .then(doctors=>{
+        res.json({doctors})
+    })
+    .catch(err=>{
+        console.log(err)
+    })
+})
+
+//get family doctors
+router.get('/getfamilydoc',requireLogin,(req,res)=>{         
+    Doctor.find({ specialization:5})          
+    .select("-password")
+    .then(doctors=>{
+        res.json({doctors})
+    })
+    .catch(err=>{
+        console.log(err)
+    })
+})
+
+//get ocd doctors
+router.get('/getocddoc',requireLogin,(req,res)=>{         
+    Doctor.find({ specialization:6})          
+    .select("-password")
+    .then(doctors=>{
+        res.json({doctors})
+    })
+    .catch(err=>{
+        console.log(err)
+    })
+})
+
+//get teen doctors
+router.get('/getteendoc',requireLogin,(req,res)=>{         
+    Doctor.find({ specialization:7})          
+    .select("-password")
+    .then(doctors=>{
+        res.json({doctors})
+    })
+    .catch(err=>{
+        console.log(err)
+    })
+})
+
+// get lgbtq doctors
+router.get('/getlgbtqdoc',requireLogin,(req,res)=>{         
+    Doctor.find({ specialization:8})          
+    .select("-password")
+    .then(doctors=>{
+        res.json({doctors})
+    })
+    .catch(err=>{
+        console.log(err)
+    })
+})
 module.exports=router; 
