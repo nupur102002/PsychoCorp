@@ -1,12 +1,12 @@
   // eslint-disable-next-line
   import React,{useState,useContext}  from "react";
   import {Link,useNavigate} from "react-router-dom";
- 
+  import { UserContext } from "../../App";
   import Logo from "../logo";
   import M from "materialize-css"
 
 const Login=()=>{
- 
+  const {state,dispatch} = useContext(UserContext)
   const navigate = useNavigate();        /*instead of useHistory */
   const [password,setPassword]=useState("")
   const [email,setEmail]=useState("")
@@ -33,7 +33,9 @@ const Login=()=>{
       M.toast({html:data.error,classes:"#c62828 red darken-3"})
      }
      else {
-     
+      localStorage.setItem("jwt",data.token)
+      localStorage.setItem("user",JSON.stringify(data.user))
+      M.toast({html:"success",classes:"#43a047 green darken-1"})
       navigate('/');
       window.location.reload();
      }
