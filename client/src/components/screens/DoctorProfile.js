@@ -24,8 +24,69 @@ const Profile=()=>{
         })
     },[state])     /// debug here we use to debug loading error without it it not showing proper doctorprofile 
 
-   
-
+    router.put('/follow',requireLogin,(req,res)=>{
+        Doctor.findByIdAndUpdate(req.body.followId,{
+            $push:{followers:req.user._id}
+        },{
+            new:true
+        },(err,result1)=>{
+            if(err){
+                return res.status(422).json({error:err})
+            }
+          User.findByIdAndUpdate(req.user._id,{
+              $push:{following:req.body.followId}
+              
+          },{new:true}).select("-password").then(result2=>{
+              res.json({result1,result2})
+          }).catch(err=>{
+              return res.status(422).json({error:err})
+          })
+    
+        }
+        )
+    })
+    router.put('/unfollow',requireLogin,(req,res)=>{
+        Doctor.findByIdAndUpdate(req.body.unfollowId,{
+            $pull:{followers:req.user._id}
+        },{
+            new:true
+        },(err,result1)=>{
+            if(err){
+                return res.status(422).json({error:err})
+            }
+          User.findByIdAndUpdate(req.user._id,{
+              $pull:{following:req.body.unfollowId}
+              
+          },{new:true}).select("-password").then(result2=>{
+              res.json({result1,result2})
+          }).catch(err=>{
+              return res.status(422).json({error:err})
+          })
+    
+        }
+        )
+    })
+    const giverating= (rate,n)=>{
+        fetch('/rating',{
+            method:"put",
+            headers:{
+                "Content-Type":"application/json",
+                "Authorization":"Bearer "+localStorage.getItem('jwt')
+            },
+            body:JSON.stringify({
+                docid,
+                rate,
+                n
+            })
+        }).then(res=>res.json())
+        .then(data=>{
+        
+        console.log(data)
+            setProfile(data)
+            setRating(data.rating) 
+             setNum(data.ratingNo)
+        })
+    }
     return (
         <>
         {docProfile? 

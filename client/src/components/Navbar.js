@@ -64,20 +64,56 @@ const NavBar = () => {
     }
   }
 
+  const fetchDoctors = (query)=>{
+    setSearch(query)
+    fetch('/search-doctor',{
+      method:"post",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify({
+        query
+      })
+    }).then(res=>res.json())
+    .then(results=>{
+      console.log(results)
+      setdoctorDetails(results.doctor)
+    })
+ }
 
-  return (
-    <nav>
-      <div className="nav-wrapper white">
-        <Link to={state ? "/" : "/login"} className="brand-logo">
-          PsychoCorp
-        </Link>
-        <ul id="nav-mobile" className="right hide-on-med-and-down">
-          {renderList()}
-        </ul>
+ return (
+  <nav>
+    <div className="nav-wrapper white">
+    
+      <Link to={state ? state.usertype==1?"/doctor":"/": "/health"} className="brand-logo">
+       PsychoCorp
+      </Link>
+      <ul id="nav-mobile" className="right hide-on-med-and-down">
+        {renderList()}
+      </ul>
+    </div>
+    <div id="modal1" className="modal" ref={searchModal} style={{color:"black"}}>
+        <div className="modal-content">
+        <input
+          type="text"
+          placeholder="search doctors"
+          value={search}
+          onChange={(e)=>fetchDoctors(e.target.value)}
+          />
+           <ul className="collection">
+           {doctorDetails.map(item=>{
+               return <Link to={ "/doctorprofile/"+item._id} onClick={()=>{
+                 M.Modal.getInstance(searchModal.current).close()
+                 setSearch('')
+               }}><li className="collection-item">{item.name}</li></Link> 
+             })}
+            </ul>
+        </div>
+        <div className="modal-footer">
+          <button className="modal-close waves-effect waves-green btn-flat" onClick={()=>setSearch('')}>close</button>
+        </div>
       </div>
-     
-    </nav>
-  );
+  </nav>
+);
 }
-
 export default NavBar;
