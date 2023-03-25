@@ -8,7 +8,9 @@ const Profile=()=>{
     const [docProfile,setProfile] = useState(null)
     const {state,dispatch} = useContext(UserContext)
     const {docid} = useParams()
-  
+    const [rating,setRating]=useState()
+    const [num,setNum]=useState()
+    const [showfollow,setShowFollow] = useState(true)
     // console.log(docid)
     useEffect(()=>{
         fetch(`/doctorprofile/${docid}`,{
@@ -22,50 +24,28 @@ const Profile=()=>{
             setRating(result.rating)
             setNum(result.ratingNo)
         })
-    },[state])     /// debug here we use to debug loading error without it it not showing proper doctorprofile 
+    },[state,rating])     /// debug here we use to debug loading error without it it not showing proper doctorprofile 
 
-    router.put('/follow',requireLogin,(req,res)=>{
-        Doctor.findByIdAndUpdate(req.body.followId,{
-            $push:{followers:req.user._id}
-        },{
-            new:true
-        },(err,result1)=>{
-            if(err){
-                return res.status(422).json({error:err})
-            }
-          User.findByIdAndUpdate(req.user._id,{
-              $push:{following:req.body.followId}
-              
-          },{new:true}).select("-password").then(result2=>{
-              res.json({result1,result2})
-          }).catch(err=>{
-              return res.status(422).json({error:err})
-          })
-    
-        }
-        )
-    })
-    router.put('/unfollow',requireLogin,(req,res)=>{
-        Doctor.findByIdAndUpdate(req.body.unfollowId,{
-            $pull:{followers:req.user._id}
-        },{
-            new:true
-        },(err,result1)=>{
-            if(err){
-                return res.status(422).json({error:err})
-            }
-          User.findByIdAndUpdate(req.user._id,{
-              $pull:{following:req.body.unfollowId}
-              
-          },{new:true}).select("-password").then(result2=>{
-              res.json({result1,result2})
-          }).catch(err=>{
-              return res.status(422).json({error:err})
-          })
-    
-        }
-        )
-    })
+    const followUser = ()=>{
+        fetch('/follow',{
+            method:"put",
+            headers:{
+                "Content-Type":"application/json",
+                "Authorization":"Bearer "+localStorage.getItem('jwt')
+            },
+            body:JSON.stringify({
+                followId:docid
+            })
+        }).then(res=>res.json())
+        .then(data=>{
+        
+        console.log(data)
+            dispatch({type:"UPDATE",payload:{following:data.result2.following}})
+             localStorage.setItem("user",JSON.stringify(data.result2))
+            setProfile(data.resutl1) 
+             setShowFollow(false)
+        })
+    }
     const giverating= (rate,n)=>{
         fetch('/rating',{
             method:"put",
@@ -87,6 +67,28 @@ const Profile=()=>{
              setNum(data.ratingNo)
         })
     }
+    const unfollowUser = ()=>{
+        fetch('/unfollow',{
+            method:"put",
+            headers:{
+                "Content-Type":"application/json",
+                "Authorization":"Bearer "+localStorage.getItem('jwt')
+            },
+            body:JSON.stringify({
+                unfollowId:docid
+            })
+        }).then(res=>res.json())
+        .then(data=>{
+            
+            dispatch({type:"UPDATE",payload:{following:data.result2.following}})
+             localStorage.setItem("user",JSON.stringify(data.result2))
+            
+            setProfile(data.result1)
+             setShowFollow(true)
+             
+        })
+    }
+
     return (
         <>
         {docProfile? 
@@ -120,9 +122,34 @@ backgroundColor:"rgba(131, 217, 231, 0.1)",
                 <div style={{ display: "flex", justifyContent: "space-between", width: "108%" }}>
                 {/* <h6>{mypics.length} recipes</h6> */}
                        <h6>{docProfile?docProfile.followers.length:"0"} followers</h6>
-                      
-                      <h6>Current Rating {docProfile.rating}</h6>
-                     
+                       {showfollow?
+                     <button style={{
+                         margin:"10px"
+                     }} className="btn waves-effect waves-light #64b5f6 blue darken-1"
+                      onClick={()=>followUser()}
+                      >
+                          Follow
+                      </button>
+                      : 
+                      <button
+                      style={{
+                          margin:"10px"
+                      }}
+                      className="btn waves-effect waves-light #64b5f6 blue darken-1"
+                      onClick={()=>unfollowUser()}
+                      >
+                          UnFollow
+                      </button>
+
+                      }
+                      <h6>Current Rating {rating}</h6>
+                      <button style={{
+                         margin:"10px"
+                     }} className="btn waves-effect waves-light #64b5f6 blue darken-1"
+                      onClick={()=>giverating((rating*num+4)/num,num+1)}
+                      >
+                          Rate the  Doctor
+                      </button>
                       
                 </div>
             </div>

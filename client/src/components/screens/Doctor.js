@@ -4,9 +4,9 @@ import {DefaultPlayer as Video} from "react-html5video"
 import "react-html5video/dist/styles.css"
 
 const Doctor = () => {
-   
-    const { state, dispatch } = useContext(UserContext)
     
+    const { state, dispatch } = useContext(UserContext)
+    const [image,setImage] = useState("")
 
 
 
@@ -80,7 +80,7 @@ backgroundColor:"rgba(131, 217, 231, 0.1)",
                 <h4>Psychiatric social workers.</h4>
                 <h5>{state ? state.email : "loading"}</h5>
                 <div style={{ display: "flex", justifyContent: "space-between", width: "108%" }}>
-                
+            
                        <h6>{state?state.followers.length:"0"} followers</h6>
                      
                 </div>
