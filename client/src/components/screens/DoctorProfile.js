@@ -45,33 +45,27 @@ const Profile=()=>{
         }
         )
     })
-    const unfollowUser = ()=>{
-        fetch('/unfollow',{
-            method:"put",
-            headers:{
-                "Content-Type":"application/json",
-                "Authorization":"Bearer "+localStorage.getItem('jwt')
-            },
-            body:JSON.stringify({
-                unfollowId:docid
-            })
-        }).then(res=>res.json())
-        .then(data=>{
-            
-            dispatch({type:"UPDATE",payload:{following:data.following,followers:data.followers}})
-        localStorage.setItem("user",JSON.stringify(data))
-        setProfile((prevState)=>{
-            return {
-                ...prevState,
-                user:{
-                    ...prevState.user,
-                    followers:[...prevState.user.followers,data._id]
-                   }
+    router.put('/unfollow',requireLogin,(req,res)=>{
+        Doctor.findByIdAndUpdate(req.body.unfollowId,{
+            $pull:{followers:req.user._id}
+        },{
+            new:true
+        },(err,result1)=>{
+            if(err){
+                return res.status(422).json({error:err})
             }
-        })
-             
-        })
-    }
+          User.findByIdAndUpdate(req.user._id,{
+              $pull:{following:req.body.unfollowId}
+              
+          },{new:true}).select("-password").then(result2=>{
+              res.json({result1,result2})
+          }).catch(err=>{
+              return res.status(422).json({error:err})
+          })
+    
+        }
+        )
+    })
     return (
         <>
         {docProfile? 
