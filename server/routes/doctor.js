@@ -9,7 +9,19 @@ const Doctor = mongoose.model("Doctor");
 const User = mongoose.model("User");
 
 
+/// doctor profile when user click on doctor information
+router.get('/doctorprofile/:id',requireLoginDoc,(req,res)=>{      // here we get the "id" of the user along with url , whose profile we want to see
+    Doctor.findOne({_id:req.params.id})                   // query to find the user using "id" in "User" db
+    .select("-password")                                   // select all the field except password
+    .then(doctor=>{
+          res.json(doctor)
+         
+    }).catch(err=>{
+        return res.status(404).json({error:"User not found"})
+    })
+})
 
+// updating doc pic
 router.put('/doc/updatepic',requireLoginDoc,(req,res)=>{
     Doctor.findByIdAndUpdate(req.user._id,{$set:{pic:req.body.pic}},{new:true},
         (err,result)=>{
