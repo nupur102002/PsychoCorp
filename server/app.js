@@ -21,8 +21,11 @@ app.use(
     express.urlencoded({ extended: true })
 );
     
-
+require('./models/user');
+require('./models/doctor');
  app.use(express.json());
+
+ app.use(require('./routes/auth'));
  
 
 app.listen(PORT,()=>{
