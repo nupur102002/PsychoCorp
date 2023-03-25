@@ -1,14 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
 import { UserContext } from '../../App';
 import { Link } from "react-router-dom";
+import "react-html5video/dist/styles.css"
 import M from "materialize-css"
 
-const Addiction = () => {
+const Addiction=()=> {
     const [data, setData] = useState([])
     const [commentValue, setcommentValue] = useState("")
     const { state, dispatch } = useContext(UserContext)
-    const [doc, setDoc] = useState([])
-
     useEffect(() => {
         fetch('/getaddiction', {
             headers: {
@@ -119,7 +118,6 @@ const Addiction = () => {
                 setData(newData)
             })
     }
-
     return (
         <div>
             <div className="add">
@@ -128,24 +126,22 @@ const Addiction = () => {
                 <div><img src="https://img.freepik.com/free-photo/addiction-pills-cigarettes_23-2148585918.jpg" /></div>
             </div>
             <div className="add1">
-                <div style={{ width: "500px", paddingLeft: "20px" }}><h4>HELLO.<br />NICE TO<br />MEET YOU</h4></div>
+                <div style={{ width: "500px",paddingLeft:"20px" }}><h4>HELLO.<br />NICE TO<br />MEET YOU</h4></div>
                 <div><h5>Peer-to-peer support group for individuals and loved ones in the process of on-going addiction recovery.</h5>
                     <p>For many, recovery from addiction is a daily struggle. Traditional treatment methods are only a part of the recovery process. Daily choices and continued support from friends, family and others like themselves are a critical part of the road to recovery.</p></div>
             </div>
             <div className="add2">
-                <div style={{ paddingLeft: "20px" }}><h5>ABOUT ADDICTION.</h5>
+                <div style={{paddingLeft:"20px"}}><h5>ABOUT ADDICTION.</h5>
                     <p>Addiction is often misunderstood. Many people believe that addicts can stop if they are simply willing to change their behavior. The fact is, addiction is a disease that impacts the brain. Stopping drug or alcohol abuse is not simply a matter of willpower. Drugs and alcohol can change the brain to foster compulsive use and abuse.
 
                         Addiction treatment usually requires a combination of medication and addiction counseling or substance abuse therapy. In addition, many drug or alcohol dependent individuals suffer from an underlying mental disorders. Addiction counseling and treatment methods must go beyond the addictive behavior and address any co-occurring medical, psychiatric and social problems.
 
                         Today much more is understood about how drugs and alcohol work in the brain, and we know that drug and alcohol addiction can be successfully treated.</p></div>
-                <div><img style={{ width: "300px", height: "200px", paddingRight: "20px" }} src="https://support.therapytribe.com/wp-content/uploads/2015/07/Addiction-Substance-Abuse.jpg" />
-                    <br />
-
-                </div>
+                <div><img style={{width:"300px",height:"200px",paddingRight:"20px"}} src="https://support.therapytribe.com/wp-content/uploads/2015/07/Addiction-Substance-Abuse.jpg"/>
+                <br/>
+                <button className='btn'>Find a therapist</button></div>
             </div>
-
-            <hr />
+            <hr/>
             <h3 style={{ textAlign: "center" }}>SUCCESS STORIES THAT MAY INSPIRE YOU!!</h3>
 
             <div className="home">
@@ -162,7 +158,7 @@ const Addiction = () => {
                                     >delete</i>
                                 }</h5>
                                 <div className="card-image">
-                                    <img src={item.photo} alt={item.title} />
+                                        <img src={item.photo} alt={item.title}/>
                                 </div>
                                 <div className="card-content">
                                     <i className="material-icons" style={{ color: "red" }}>favorite</i>
@@ -195,6 +191,7 @@ const Addiction = () => {
                     })
                 }
             </div>
+            
         </div>
     )
 }
