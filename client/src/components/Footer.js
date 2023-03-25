@@ -6,7 +6,7 @@ const Footer = () => {
         <hr/>
         <footer>
             <div className="footer-content">
-                <h3>Healthy</h3>
+                <h3>PsychoCorp</h3>
                 <p>The road to mental health begins with you; but it helps to know you're not alone.We believe that individuals become empowered to help themselves and others when they feel a part of something larger. Our free online support community offers members a convenient and safe place to connect. Join the larger conversation on wellness and peer support, or limit your interactions to your core support group(s)-the choice is yours.
 
                 </p>

@@ -21,7 +21,10 @@ const transporter = nodemailer.createTransport({
     }
 })
 
-//User Signup Route
+
+                              /// User
+
+
 router.post("/signup", (req, res) => {
     const { name, email, password,pic } = req.body;
     if (!email || !password || !name) {
@@ -57,7 +60,7 @@ router.post("/signup", (req, res) => {
 
 });
 
-//User login route
+//Login/Signin
 router.post("/login",(req,res)=>{
 
     const {email,password}=req.body;
@@ -77,9 +80,9 @@ router.post("/login",(req,res)=>{
             if(doMatch)
             {
                 // res.json("Sucessfully signed in");
-                const token=jwt.sign({_id:saveduser._id},JWT_SECRET); //saving user id to _id & create token using jwt
-                const {_id,usertype,name,email,followers,following,pic} = saveduser
-                res.json({token,user:{_id,usertype,name,email,followers,following,pic}});    //sending token 
+                const token=jwt.sign({_id:saveduser._id},JWT_SECRET); //saving user id to _id 
+                const {_id,usertype,name,email,following,pic} = saveduser
+                res.json({token,user:{_id,usertype,name,email,following,pic}});
             }
             else
             {
@@ -93,7 +96,59 @@ router.post("/login",(req,res)=>{
 
 });
 
-//Doctor Signup
+router.post('/reset-password',(req,res)=>{
+    crypto.randomBytes(32,(err,buffer)=>{
+        if(err){
+            console.log(err)
+        }
+        const token = buffer.toString("hex")
+        User.findOne({email:req.body.email})
+        .then(user=>{
+            if(!user){
+                return res.status(422).json({error:"User don't exists with that email"})
+            }
+            user.resetToken = token
+            user.expireToken = Date.now() + 3600000
+            user.save().then((result)=>{
+                transporter.sendMail({
+                    to:user.email,
+                    from:"brute.force.nhv@gmail.com",
+                    subject:"password reset",
+                    html:`
+                    <p>You requested for password reset</p>
+                    <h5>click in this <a href="http://localhost:3000/reset/${token}">link</a> to reset password</h5>
+                    `
+                })
+                res.json({message:"check your email"})
+            })
+
+        })
+    })
+})
+
+router.post('/new-password',(req,res)=>{
+    const newPassword = req.body.password
+    const sentToken = req.body.token
+    User.findOne({resetToken:sentToken,expireToken:{$gt:Date.now()}})
+    .then(user=>{
+        if(!user){
+            return res.status(422).json({error:"Try again session expired"})
+        }
+        bcrypt.hash(newPassword,12).then(hashedpassword=>{
+           user.password = hashedpassword
+           user.resetToken = undefined
+           user.expireToken = undefined
+           user.save().then((result)=>{
+               res.json({message:"password updated success"})
+           })
+        })
+    }).catch(err=>{
+        console.log(err)
+    })
+})
+
+                                        ////// Doctor
+
 router.post("/signupDoc", (req, res) => {
     const { name, email, password,pic,licId,body,type } = req.body;
     if (!email || !password || !name||!licId||!type||!body) {
@@ -132,7 +187,7 @@ router.post("/signupDoc", (req, res) => {
 
 });
 
-//Doctor login
+//Login/Signin
 router.post("/loginDoc",(req,res)=>{
 
     const {email,password}=req.body;
@@ -168,28 +223,27 @@ router.post("/loginDoc",(req,res)=>{
 
 });
 
-//user reset password
-router.post('/reset-password',(req,res)=>{
+router.post('/docreset-password',(req,res)=>{
     crypto.randomBytes(32,(err,buffer)=>{
         if(err){
             console.log(err)
         }
         const token = buffer.toString("hex")
-        User.findOne({email:req.body.email})
-        .then(user=>{
-            if(!user){
+        Doctor.findOne({email:req.body.email})
+        .then(doctor=>{
+            if(!doctor){
                 return res.status(422).json({error:"User don't exists with that email"})
             }
-            user.resetToken = token
-            user.expireToken = Date.now() + 3600000
-            user.save().then((result)=>{
+            doctor.resetToken = token
+            doctor.expireToken = Date.now() + 3600000
+            doctor.save().then((result)=>{
                 transporter.sendMail({
-                    to:user.email,
+                    to:doctor.email,
                     from:"brute.force.nhv@gmail.com",
                     subject:"password reset",
                     html:`
                     <p>You requested for password reset</p>
-                    <h5>click in this <a href="http://localhost:3000/reset/${token}">link</a> to reset password</h5>
+                    <h5>click in this <a href="http://localhost:3000/docreset/${token}">link</a> to reset password</h5>
                     `
                 })
                 res.json({message:"check your email"})
@@ -199,21 +253,19 @@ router.post('/reset-password',(req,res)=>{
     })
 })
 
-
-//user new-password
-router.post('/new-password',(req,res)=>{
+router.post('/docnew-password',(req,res)=>{
     const newPassword = req.body.password
     const sentToken = req.body.token
-    User.findOne({resetToken:sentToken,expireToken:{$gt:Date.now()}})
-    .then(user=>{
-        if(!user){
+    Doctor.findOne({resetToken:sentToken,expireToken:{$gt:Date.now()}})
+    .then(doctor=>{
+        if(!doctor){
             return res.status(422).json({error:"Try again session expired"})
         }
         bcrypt.hash(newPassword,12).then(hashedpassword=>{
-           user.password = hashedpassword
-           user.resetToken = undefined
-           user.expireToken = undefined
-           user.save().then((result)=>{
+           doctor.password = hashedpassword
+           doctor.resetToken = undefined
+           doctor.expireToken = undefined
+           doctor.save().then((result)=>{
                res.json({message:"password updated success"})
            })
         })
@@ -221,12 +273,6 @@ router.post('/new-password',(req,res)=>{
         console.log(err)
     })
 })
-
-
-
-
-
-
 
 module.exports = router;
 

@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
 import { UserContext } from '../../App';
 import { Link } from "react-router-dom";
+import "react-html5video/dist/styles.css"
 import M from "materialize-css"
 
 const Depression=()=> {
-  const [data, setData] = useState([])
+    const [data, setData] = useState([])
     const [commentValue, setcommentValue] = useState("")
     const { state, dispatch } = useContext(UserContext)
     useEffect(() => {
