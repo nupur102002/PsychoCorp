@@ -5,6 +5,119 @@ import "react-html5video/dist/styles.css"
 import M from "materialize-css"
 
 const Teen = () => {
+  const [data, setData] = useState([])
+  const [commentValue, setcommentValue] = useState("")
+  const { state, dispatch } = useContext(UserContext)
+  useEffect(() => {
+      fetch('/getteen', {
+          headers: {
+              "Authorization": "Bearer " + localStorage.getItem("jwt")
+          }
+      }).then(res => res.json())
+          .then(result => {
+              // console.log(result)
+              setData(result.stories)
+          })
+  }, [])
+
+  const likePost = (id) => {
+      fetch('/like', {
+          method: "put",
+          headers: {
+              "Content-Type": "application/json",
+              "Authorization": "Bearer " + localStorage.getItem("jwt")
+          },
+          body: JSON.stringify({
+              postId: id
+          })
+      }).then(res => res.json())
+          .then(result => {
+              console.log(result)
+              const newData = data.map(item => {
+                  if (item._id == result._id) {
+                      return result;
+                  }
+                  else {
+                      return item;
+                  }
+              })
+              setData(newData)
+          }).catch(err => {
+              console.log(err)
+          })
+  }
+
+  const unlikePost = (id) => {
+      fetch('/unlike', {
+          method: "put",
+          headers: {
+              "Content-Type": "application/json",
+              "Authorization": "Bearer " + localStorage.getItem("jwt")
+          },
+          body: JSON.stringify({
+              postId: id
+          })
+      }).then(res => res.json())
+          .then(result => {
+
+              const newData = data.map(item => {
+                  if (item._id == result._id) {
+                      return result;
+                  }
+                  else {
+                      return item;
+                  }
+              })
+              setData(newData)
+          }).catch(err => {
+              console.log(err)
+          })
+  }
+
+  const makeComment = (text, postId) => {
+      fetch('/comment', {
+          method: "put",
+          headers: {
+              "Content-Type": "application/json",
+              "Authorization": "Bearer " + localStorage.getItem("jwt")
+          },
+          body: JSON.stringify({
+              postId,
+              text
+          })
+      }).then(res => res.json())
+          .then(result => {
+              console.log(result)
+              const newData = data.map(item => {
+                  if (item._id == result._id) {
+                      return result;
+                  }
+                  else {
+                      return item;
+                  }
+              })
+              setData(newData)
+              setcommentValue("")
+          }).catch(err => {
+              console.log(err)
+          })
+  }
+
+  const deletePost = (postid) => {
+      fetch(`/deletepost/${postid}`, {
+          method: "delete",
+          headers: {
+              Authorization: "Bearer " + localStorage.getItem("jwt")
+          }
+      }).then(res => res.json())
+          .then(result => {
+              console.log(result)
+              const newData = data.filter(item => {
+                  return item._id !== result._id
+              })
+              setData(newData)
+          })
+  }
   return (
     <div>
       <div className="add" style={{ backgroundColor: "#f05928" }}>
