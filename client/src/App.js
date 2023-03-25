@@ -6,7 +6,6 @@ import { reducer, initialState } from './reducers/userReducer'
 import Navbar from "./components/Navbar"
 import Home from "./components/screens/Home"
 import SignIn from "./components/screens/Login"
-import Profile from "./components/screens/Profile"
 import SignUp from "./components/screens/Signup"
 import CreatePost from "./components/screens/CreatePost"
 import Addiction from './components/screens/Addiction';
@@ -17,6 +16,8 @@ import Family from './components/screens/Family';
 import Ocd from './components/screens/Ocd';
 import Teen from './components/screens/Teen';
 import Lgbtq from './components/screens/Lgbtq';
+import Footer from "./components/Footer"
+
 export const UserContext = createContext()
 
 
@@ -58,12 +59,12 @@ const Routing = () => {
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState)
   return (
-    <UserContext.Provider value={{ state, dispatch }}>
-      <BrowserRouter>
-        <Navbar />
-        <Routing />
-
-      </BrowserRouter>
+    <UserContext.Provider value={{state,dispatch}}>
+    <BrowserRouter>
+      <Navbar />
+      <Routing />  
+      <Footer />
+    </BrowserRouter>
     </UserContext.Provider>
   );
 }
