@@ -17,6 +17,7 @@ import Ocd from './components/screens/Ocd';
 import Teen from './components/screens/Teen';
 import Lgbtq from './components/screens/Lgbtq';
 import Footer from "./components/Footer"
+import CreateSuccess from './components/screens/CreateSuccess';
 
 export const UserContext = createContext()
 
@@ -53,6 +54,7 @@ const Routing = () => {
       <Route path="/ocd" element={<Ocd />} />
       <Route path="/teen" element={<Teen />} />
       <Route path="/lgbtq" element={<Lgbtq />} />
+      <Route path="/createSuccess" element={<CreateSuccess/>}/>
     </Routes>
   )
 }
