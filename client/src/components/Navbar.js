@@ -5,10 +5,11 @@ import M from 'materialize-css'
 
 const NavBar = () => {
   const [search,setSearch] = useState('')
-  const [userDetails,setUserDetails] = useState([])
+  const [doctorDetails,setdoctorDetails] = useState([])
   const  searchModal = useRef(null)
   const { state, dispatch } = useContext(UserContext)
   const navigate = useNavigate()
+  
   useEffect(()=>{
     M.Modal.init(searchModal.current)
   },[])
@@ -81,39 +82,42 @@ const NavBar = () => {
     })
  }
 
- return (
-  <nav>
-    <div className="nav-wrapper white">
-    
-      <Link to={state ? state.usertype==1?"/doctor":"/": "/health"} className="brand-logo">
-       PsychoCorp
-      </Link>
-      <ul id="nav-mobile" className="right hide-on-med-and-down">
-        {renderList()}
-      </ul>
-    </div>
-    <div id="modal1" className="modal" ref={searchModal} style={{color:"black"}}>
-        <div className="modal-content">
-        <input
-          type="text"
-          placeholder="search doctors"
-          value={search}
-          onChange={(e)=>fetchDoctors(e.target.value)}
-          />
-           <ul className="collection">
-           {doctorDetails.map(item=>{
-               return <Link to={ "/doctorprofile/"+item._id} onClick={()=>{
-                 M.Modal.getInstance(searchModal.current).close()
-                 setSearch('')
-               }}><li className="collection-item">{item.name}</li></Link> 
-             })}
-            </ul>
-        </div>
-        <div className="modal-footer">
-          <button className="modal-close waves-effect waves-green btn-flat" onClick={()=>setSearch('')}>close</button>
-        </div>
+
+
+  return (
+    <nav>
+      <div className="nav-wrapper white">
+      
+        <Link to={state ? state.usertype==1?"/doctor":"/": "/health"} className="brand-logo">
+         PsychoCorp
+        </Link>
+        <ul id="nav-mobile" className="right hide-on-med-and-down">
+          {renderList()}
+        </ul>
       </div>
-  </nav>
-);
+      <div id="modal1" className="modal" ref={searchModal} style={{color:"black"}}>
+          <div className="modal-content">
+          <input
+            type="text"
+            placeholder="search doctors"
+            value={search}
+            onChange={(e)=>fetchDoctors(e.target.value)}
+            />
+             <ul className="collection">
+             {doctorDetails.map(item=>{
+                 return <Link to={ "/doctorprofile/"+item._id} onClick={()=>{
+                   M.Modal.getInstance(searchModal.current).close()
+                   setSearch('')
+                 }}><li className="collection-item">{item.name}</li></Link> 
+               })}
+              </ul>
+          </div>
+          <div className="modal-footer">
+            <button className="modal-close waves-effect waves-green btn-flat" onClick={()=>setSearch('')}>close</button>
+          </div>
+        </div>
+    </nav>
+  );
 }
+
 export default NavBar;
