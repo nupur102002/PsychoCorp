@@ -30,7 +30,7 @@ const doctorSchema = new mongoose.Schema({
       },
       rating :{
         type: Number,
-        default:5
+        default:1
       },
       totalRating : {
         type: Number,
