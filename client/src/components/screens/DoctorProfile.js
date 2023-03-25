@@ -66,6 +66,27 @@ const Profile=()=>{
         }
         )
     })
+    const giverating= (rate,n)=>{
+        fetch('/rating',{
+            method:"put",
+            headers:{
+                "Content-Type":"application/json",
+                "Authorization":"Bearer "+localStorage.getItem('jwt')
+            },
+            body:JSON.stringify({
+                docid,
+                rate,
+                n
+            })
+        }).then(res=>res.json())
+        .then(data=>{
+        
+        console.log(data)
+            setProfile(data)
+            setRating(data.rating) 
+             setNum(data.ratingNo)
+        })
+    }
     return (
         <>
         {docProfile? 
