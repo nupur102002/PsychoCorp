@@ -50,7 +50,7 @@ const Login=()=>{
          <div className="card auth-card input-field bg-body size">
         
          
-            <h2 >Healthy</h2>
+            <h2 >PsychoCorp</h2>
             <br/><br/>
             <input
             className="ip"
