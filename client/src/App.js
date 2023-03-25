@@ -16,6 +16,9 @@ import Teen from './components/screens/Teen';
 import Lgbtq from './components/screens/Lgbtq';
 import Footer from "./components/Footer"
 import CreateSuccess from './components/screens/CreateSuccess';
+import Reset from './components/screens/Reset';
+import NewPassword from './components/screens/NewPassword';
+
 
 export const UserContext = createContext()
 
@@ -51,6 +54,8 @@ const Routing = () => {
       <Route path="/teen" element={<Teen />} />
       <Route path="/lgbtq" element={<Lgbtq />} />
       <Route path="/createSuccess" element={<CreateSuccess/>}/>
+      <Route exact path="/reset" element={<Reset />} />
+      <Route path="/reset/:token" element={<NewPassword />} /> 
     </Routes>
   )
 }
