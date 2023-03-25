@@ -230,4 +230,18 @@ router.get('/getteen',requireLogin,(req,res)=>{
     })
 })
 
+//get lgbtq success stories
+router.get('/getlgbtq',requireLogin,(req,res)=>{         
+    Story.find({ category:8})          
+    .populate("postedBy","_id name")
+    .populate("comments.postedBy","_id name")
+    .sort('-createdAt')
+    .then(stories=>{
+        res.json({stories})
+    })
+    .catch(err=>{
+        console.log(err)
+    })
+})
+
 module.exports=router;
