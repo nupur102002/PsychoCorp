@@ -72,4 +72,22 @@ router.put('/like',requireLogin,(req,res)=>{
       }
     })
 })
+
+//Unlike a story
+router.put('/unlike',requireLogin,(req,res)=>{
+    Story.findByIdAndUpdate(req.body.postId,{
+      $pull:{likes:req.user._id}
+    },{
+      new :true
+    })
+    .populate("comments.postedBy","_id name")
+    .populate("postedBy","_id name")
+    .exec((err,result)=>{
+      if(err){
+          return res.status(422).json({error:err})
+      }else{
+          res.json(result)
+      }
+    })
+})
 module.exports=router;
