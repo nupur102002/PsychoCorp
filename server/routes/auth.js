@@ -68,9 +68,9 @@ router.post("/login",(req,res)=>{
             if(doMatch)
             {
                 // res.json("Sucessfully signed in");
-                const token=jwt.sign({_id:saveduser._id},JWT_SECRET); //saving user id to _id 
+                const token=jwt.sign({_id:saveduser._id},JWT_SECRET); //saving user id to _id & create token using jwt
                 const {_id,usertype,name,email,followers,following,pic} = saveduser
-                res.json({token,user:{_id,usertype,name,email,followers,following,pic}});
+                res.json({token,user:{_id,usertype,name,email,followers,following,pic}});    //sending token 
             }
             else
             {
