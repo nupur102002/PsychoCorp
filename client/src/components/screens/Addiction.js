@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { UserContext } from '../../App';
 import { Link } from "react-router-dom";
-import "react-html5video/dist/styles.css"
 import M from "materialize-css"
 
 const Addiction=()=> {
