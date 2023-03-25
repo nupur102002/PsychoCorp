@@ -64,6 +64,18 @@ router.get('/doctorprofile/:id',requireLoginDoc,(req,res)=>{      // here we get
     })
 })
 
+//search the doctor
+router.post('/search-doctor',(req,res)=>{
+    let userPattern = new RegExp("^"+req.body.query)
+    Doctor.find({name:{$regex:userPattern}})
+    .select("-password")
+    .then(doctor=>{
+        res.json({doctor})
+    }).catch(err=>{
+        console.log(err)
+    })
+
+})
 // updating doc pic
 router.put('/doc/updatepic',requireLoginDoc,(req,res)=>{
     Doctor.findByIdAndUpdate(req.user._id,{$set:{pic:req.body.pic}},{new:true},
@@ -74,6 +86,8 @@ router.put('/doc/updatepic',requireLoginDoc,(req,res)=>{
          res.json(result)
     })
 })
+
+//rate the doctor
 router.put('/rating',requireLogin,(req,res)=>{
     Doctor.findByIdAndUpdate(req.body.docid,{$set:{rating:req.body.rate,ratingNo:req.body.n}},{new:true},
         (err,result)=>{
