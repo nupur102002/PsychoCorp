@@ -178,7 +178,6 @@ const Addiction = () => {
                 </Row>
             </div>
             <hr />
-            <hr />
             <h3 style={{ textAlign: "center" }}>SUCCESS STORIES THAT MAY INSPIRE YOU!!</h3>
 
             <div className="home">
