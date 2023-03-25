@@ -2,12 +2,10 @@ import './App.css';
 import React, { useEffect, createContext, useReducer, useContext } from 'react';
 import { BrowserRouter, Routes, Route, useNavigate, useLocation } from "react-router-dom"
 import { reducer, initialState } from './reducers/userReducer'
-
 import Navbar from "./components/Navbar"
 import Home from "./components/screens/Home"
 import SignIn from "./components/screens/Login"
 import SignUp from "./components/screens/Signup"
-import CreatePost from "./components/screens/CreatePost"
 import Addiction from './components/screens/Addiction';
 import Anxiety from './components/screens/Anxiety';
 import Depression from './components/screens/Depression';
@@ -43,9 +41,7 @@ const Routing = () => {
     <Routes>
       <Route exact path="/" element={<Home />} />
       <Route path="/login" element={<SignIn />} />
-      <Route path="/profile" element={<Profile />} />
       <Route path="/signup" element={<SignUp />} />
-      <Route path="/create" element={<CreatePost />} />
       <Route path="/addiction" element={<Addiction />} />
       <Route path="/anxiety" element={<Anxiety />} />
       <Route path="/depression" element={<Depression />} />
