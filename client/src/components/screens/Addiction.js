@@ -5,6 +5,49 @@ import "react-html5video/dist/styles.css"
 import M from "materialize-css"
 
 const Addiction = () => {
+    const [data, setData] = useState([])
+    const [commentValue, setcommentValue] = useState("")
+    const { state, dispatch } = useContext(UserContext)
+    const [doc, setDoc] = useState([])
+    
+    useEffect(() => {
+        fetch('/getaddiction', {
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("jwt")
+            }
+        }).then(res => res.json())
+            .then(result => {
+                // console.log(result)
+                setData(result.stories)
+            })
+    }, [])
+
+    const likePost = (id) => {
+        fetch('/like', {
+            method: "put",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem("jwt")
+            },
+            body: JSON.stringify({
+                postId: id
+            })
+        }).then(res => res.json())
+            .then(result => {
+                console.log(result)
+                const newData = data.map(item => {
+                    if (item._id == result._id) {
+                        return result;
+                    }
+                    else {
+                        return item;
+                    }
+                })
+                setData(newData)
+            }).catch(err => {
+                console.log(err)
+            })
+    }
     return (
         <div>
             <div className="add">
