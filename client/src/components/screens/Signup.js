@@ -74,7 +74,7 @@ const Signup=()=>{
         <div className="mycard">
  <div className="card auth-card input-field bg-body">
               <Logo/>
-            <h2>Zaayka</h2>
+            <h2>PsychoCorp</h2>
               <input
               className="ip"
               type="text"

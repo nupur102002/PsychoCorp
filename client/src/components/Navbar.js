@@ -14,31 +14,46 @@ const NavBar = () => {
   },[])
   const renderList = () => {
     if (state) {
+      if(state.usertype==0){
+       
+        return [
+          <li key="1"><i  data-target="modal1" className="large material-icons modal-trigger" style={{color:"black"}}>search</i></li>,
+          <li key="2"><Link to="/profile">Profile</Link></li>,
+        <li key="3"><Link to="/createSuccess">Create Success Story</Link></li>,
+          <li key="4">
+            <button className="btn #c62828 red darken-3"
+             >
+              Logout
+            </button>
+          </li>
+        ]
+      }
+      else{
+       
+        return [
+          
+          // <li key="2"><Link to="/profile/doctor">Profile</Link></li>,
+          <li key="3"><Link to="/paitent">upcoming paitent</Link></li>,
+          <li key="4"><Link to="/my ">Prev paitents</Link></li>,
+          <li key="5">
+            <button className="btn #c62828 red darken-3"
+              >
+              Logout
+            </button>
+          </li>
+        ]
+      }
+      
+    } 
+    else{
       return [
-        <li key="1"><i  data-target="modal1" className="large material-icons modal-trigger" style={{color:"black"}}>search</i></li>,
-        <li key="2"><Link to="/profile">Profile</Link></li>,
-      <li key="3"><Link to="/createSuccess">Create Success Story</Link></li>,
-        <li key="4">
-          <button className="btn #c62828 red darken-3"
-           >
-            Logout
-          </button>
-        </li>
+      
+        <li key="2"><Link to="/login">User</Link></li>,
+        <li key="3"><Link to="/loginDoc">Doctor</Link></li>        
       ]
-    } else {
-      return [
-        <li key="5">
-          <Link to="/login">Login</Link>
-        </li>,
-        <li key="6">
-          <Link to="/signup">Signup</Link>
-        </li>
-      ]
-
     }
   }
 
- 
 
   return (
     <nav>
