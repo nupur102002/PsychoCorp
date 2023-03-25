@@ -24,7 +24,34 @@ const Profile=()=>{
         })
     },[state])     /// debug here we use to debug loading error without it it not showing proper doctorprofile 
 
-   
+    const followUser = ()=>{
+        fetch('/follow',{
+            method:"put",
+            headers:{
+                "Content-Type":"application/json",
+                "Authorization":"Bearer "+localStorage.getItem('jwt')
+            },
+            body:JSON.stringify({
+                followId:docid
+            })
+        }).then(res=>res.json())
+        .then(data=>{
+        
+        console.log(data)
+           
+        dispatch({type:"UPDATE",payload:{following:data.following,followers:data.followers}})
+        localStorage.setItem("user",JSON.stringify(data))
+        setProfile((prevState)=>{
+            return {
+                ...prevState,
+                user:{
+                    ...prevState.user,
+                    followers:[...prevState.user.followers,data._id]
+                   }
+            }
+        })
+        })
+    }
 
     return (
         <>
