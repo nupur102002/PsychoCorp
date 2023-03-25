@@ -162,7 +162,7 @@ const Addiction = () => {
                     {doc.map((doctor) => {
                         return (
                             <Col lg={5} sm={24} xs={24}>
-                                <Link to="/doctorprofile/{doctor.id}"><div className="car p-2 bs1 mt-3">
+                                <Link to={ "/doctorprofile/"+doctor._id}><div className="car p-2 bs1 mt-3">
                                     <div><img style={{ borderRadius: "50%", width: "200px", paddingLeft: "50px" }} src={doctor.pic} alt="a doctor" className="carimg" /></div>
 
                                     <div className="car-content d-flex align-items-center justify-content-between">
