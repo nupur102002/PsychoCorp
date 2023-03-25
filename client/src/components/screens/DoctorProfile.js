@@ -24,34 +24,27 @@ const Profile=()=>{
         })
     },[state])     /// debug here we use to debug loading error without it it not showing proper doctorprofile 
 
-    const followUser = ()=>{
-        fetch('/follow',{
-            method:"put",
-            headers:{
-                "Content-Type":"application/json",
-                "Authorization":"Bearer "+localStorage.getItem('jwt')
-            },
-            body:JSON.stringify({
-                followId:docid
-            })
-        }).then(res=>res.json())
-        .then(data=>{
-        
-        console.log(data)
-           
-        dispatch({type:"UPDATE",payload:{following:data.following,followers:data.followers}})
-        localStorage.setItem("user",JSON.stringify(data))
-        setProfile((prevState)=>{
-            return {
-                ...prevState,
-                user:{
-                    ...prevState.user,
-                    followers:[...prevState.user.followers,data._id]
-                   }
+    router.put('/follow',requireLogin,(req,res)=>{
+        Doctor.findByIdAndUpdate(req.body.followId,{
+            $push:{followers:req.user._id}
+        },{
+            new:true
+        },(err,result1)=>{
+            if(err){
+                return res.status(422).json({error:err})
             }
-        })
-        })
-    }
+          User.findByIdAndUpdate(req.user._id,{
+              $push:{following:req.body.followId}
+              
+          },{new:true}).select("-password").then(result2=>{
+              res.json({result1,result2})
+          }).catch(err=>{
+              return res.status(422).json({error:err})
+          })
+    
+        }
+        )
+    })
     const unfollowUser = ()=>{
         fetch('/unfollow',{
             method:"put",
