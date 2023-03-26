@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getMessages } from "../../api/MessageRequest";
-import { format } from "timeago.js"
+// import { format } from "timeago.js"
 import InputEmoji from "react-input-emoji"
 import "./ChatBox.css";
 import {addMessage} from "../../api/MessageRequest"
@@ -112,7 +112,7 @@ const ChatBox = ({ chat, currentUser ,setSendMessage,recieveMessage}) => {
                         {/* giving dynamic classname */}
                         <div className={message.senderId === currentUser ? "message own" : "message"} >
                             <span>{message.text}</span>
-                            <span>{format(message.createdAt)}</span>
+                            <span>{message.createdAt}</span>
                         </div>
                     </>
                 ))}
