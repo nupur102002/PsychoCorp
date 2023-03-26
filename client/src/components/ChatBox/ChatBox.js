@@ -61,7 +61,18 @@ const ChatBox = ({ chat, currentUser ,setSendMessage,recieveMessage}) => {
             chatid:chat._id,
         }
 
-       
+        //sending message to database 
+        try {
+            const {data}=await addMessage(message);
+            setMessages([...messages,data]) //fetching previous message and adding new one
+            setNewMessage("")
+        } catch (error) { 
+            console.log(error);
+        }
+
+        // send message to socket server
+        const receiverId=chat.members.find((id) => id!==currentUser);
+        setSendMessage({...message,receiverId})
     }
     return (
 
