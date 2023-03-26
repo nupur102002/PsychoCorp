@@ -26,7 +26,6 @@ const ChatBox = ({ chat, currentUser ,setSendMessage,recieveMessage}) => {
             }
         }).then(res => res.json())
             .then(result => {
-                // console.log(result)
                 setUserData(result)
             })
         // if (chat !== null) userid();  
