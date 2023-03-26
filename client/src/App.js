@@ -27,6 +27,7 @@ import Teen from './components/screens/Teen';
 import Lgbtq from './components/screens/Lgbtq';
 import CreateSuccess from './components/screens/CreateSuccess';
 import Footer from './components/Footer';
+import Chat from "./components/screens/Chat"
 export const UserContext = createContext()
 
 const Routing = ()=>{
@@ -70,6 +71,7 @@ const Routing = ()=>{
         <Route path="/createSuccess" element={<CreateSuccess/>}/>
         <Route path="/docreset" element={<DocReset/>}/>
         <Route path="/docreset/:token" element={<DocNewPassword/>}/>
+        <Route path="/chat" element={<Chat /> } /> 
     </Routes>
   )
 }
