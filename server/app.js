@@ -28,6 +28,8 @@ app.use(
  require("./models/ChatModel");
  require("./models/MessageModel");
  app.use(express.json());
+ const messageroute =require("./routes/messageroute");
+ 
 
  app.use(require('./routes/auth'));
  app.use(require('./routes/user'));
