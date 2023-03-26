@@ -36,11 +36,11 @@ const Conversation = ({ data, currentUserId }) => {
         <>
         <div className="follwer conversation">
            <div className="online-dot"></div>
-           <img src={userData?userData.user.pic:"loading.."}
+           <img src={userData?.user?.pic}
            className="followerImage"
             style={{ width: "50px", height: "50px" }} />
             <div className="name" style={{fontSize: '0.8rem'}}>
-            <span>{userData?userData.user.name:"loading.."}</span>
+            <span>{userData?.user?.name}</span>
             <p>online</p>
           </div>
           <hr></hr>
