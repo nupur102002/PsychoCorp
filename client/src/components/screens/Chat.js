@@ -31,7 +31,14 @@ const Chat = () =>{
         } )
  },[state._id])
 //sending message to socket server 
-   
+    useEffect(()=> {
+
+        if(sendMessage!==null)
+        {
+            socket.current.emit('send-message',sendMessage)
+        }
+        
+    },[sendMessage])
 
     //receive message from socket server
     useEffect(()=>{
