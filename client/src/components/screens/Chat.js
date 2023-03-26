@@ -5,6 +5,8 @@ import { userChats } from "../../api/ChatRequest";
 // import { useDispatch, useSelector } from "react-redux";
 import Conversation from "../Conversation/Conversation"
 import ChatBox from "../ChatBox/ChatBox"
+import {io} from "socket.io-client"
+
 
 const Chat = () =>{
       
@@ -13,9 +15,30 @@ const Chat = () =>{
     const { state, dispatch } = useContext(UserContext)
     console.log(state);
     const [chats, setChats] = useState([])
-    
+    const [onlineUsers, setOnlineUsers] = useState([])
+    const socket = React.useRef();
+    const [sendMessage, setSendMessage] = useState(null);
+    const [recieveMessage, setRecieveMessage] = useState(null);
 
-     
+
+    useEffect(()=> {
+
+        if(sendMessage!==null)
+        {
+            socket.current.emit('send-message',sendMessage)
+        }
+        
+    },[sendMessage])
+    //connect to Socket.io
+     useEffect(()=> {
+            socket.current=io("http://localhost:8800");
+            // console.log(state._id)
+            socket.current.emit("new-user-add",(state._id))
+            socket.current.on('get-users',(users) =>{ //users is coming from activeUsers
+                setOnlineUsers(users);
+                console.log(users);
+            } )
+     },[state._id])
     // fetching chat of database from user
     //async function for intracting the db
     useEffect(()=>{
@@ -32,7 +55,7 @@ const Chat = () =>{
             }
         }
         getChats()
-    },[state._id])
+    },[state])
   
     return (
         <>
@@ -60,7 +83,7 @@ const Chat = () =>{
                    <h4>your chat </h4>
                    {/* chat body */} 
                    
-                   <ChatBox chat ={currentChat} currentUser = {state._id} />
+                   <ChatBox chat ={currentChat} currentUser = {state._id} setSendMessage={setSendMessage}/>
 
              </div>
         </div>
