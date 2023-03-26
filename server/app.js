@@ -25,6 +25,7 @@ app.use(
  require('./models/user');
  require('./models/doctor');
  require('./models/story');
+ require("./models/ChatModel");
  app.use(express.json());
 
  app.use(require('./routes/auth'));
