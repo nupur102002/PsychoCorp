@@ -26,7 +26,7 @@ const doctorSchema = new mongoose.Schema({
     },
     body: {
         type: String,
-        required: true,
+        default : "i am a doctor"
       },
       rating :{
         type: Number,

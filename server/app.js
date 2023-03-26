@@ -25,14 +25,21 @@ app.use(
  require('./models/user');
  require('./models/doctor');
  require('./models/story');
+ require("./models/ChatModel");
+ require("./models/MessageModel");
+ 
  app.use(express.json());
+ 
+ const messageroute =require("./routes/messageroute");
+ const chatroute = require("./routes/ChatRoute");
 
  app.use(require('./routes/auth'));
  app.use(require('./routes/user'));
  app.use(require('./routes/doctor'));
  app.use(require('./routes/story'));
  
-
+ app.use('/chat',chatroute)
+ app.use('/message',messageroute) 
 app.listen(PORT,()=>{
     console.log("Server is running at port 5000");
 });
