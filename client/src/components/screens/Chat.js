@@ -3,55 +3,50 @@ import React , {useState,useContext, useEffect} from "react";
 import { UserContext } from "../../App";
 import { userChats } from "../../api/ChatRequest";
 // import { useDispatch, useSelector } from "react-redux";
-// import Conversion from ("../Conversation/Conversation")
+import Conversation from "../Conversation/Conversation"
+import ChatBox from "../ChatBox/ChatBox"
 
 const Chat = () =>{
       
     
-    
+    const [currentChat,setCurrentChat] = useState(null)
     const { state, dispatch } = useContext(UserContext)
     console.log(state);
     const [chats, setChats] = useState([])
+    
 
+     
     // fetching chat of database from user
     //async function for intracting the db
-    // useEffect(()=>{
-    //     const getChats = async()=> {
-    //         try {
-    //             const {data} = await userChats(state._id)
+    useEffect(()=>{
+        const getChats = async()=> {
+            try {
+                const {data} = await userChats(state._id)
 
                 
-    //             setChats(data)
-    //             console.log(data)
+                setChats(data)
+                console.log(data)
 
-    //         } catch (error) {
-    //             console.log(error);
-    //         }
-    //     }
-    //     getChats()
-    // },[state._id])
-    useEffect(() => {
-        fetch('/allchat', {
-            headers: {
-                "Authorization": "Bearer " + localStorage.getItem("jwt")
+            } catch (error) {
+                console.log(error);
             }
-        }).then(res => res.json())
-            .then(result => {
-                console.log(result)
-                setChats(result.chats)
-            })
-    }, [])
+        }
+        getChats()
+    },[state._id])
+  
     return (
+        <>
         <div className="Chat">
             {/* Left Side */}
             <div className="Left_side_chat">
                  
                  <div className="Chat-container">
-                <h2>Chats</h2>
+                <h3>chats</h3>
                 <div className="Chat-List">
                     {chats.map((chat) =>(
-                        <div>
-                            {/* <Conversion data={chat} currentUser={state._id} /> */}
+                        
+                        <div onClick={() => setCurrentChat(chat)}>
+                            <Conversation data={chat} currentUserId={state._id} />
                            <h1>Conversation</h1> 
                         </div>
 
@@ -62,9 +57,14 @@ const Chat = () =>{
              
              {/* Right side */}
              <div className="Right-side-chat">
-                   <h3>Right side</h3>
+                   <h4>your chat </h4>
+                   {/* chat body */} 
+                   
+                   <ChatBox chat ={currentChat} currentUser = {state._id} />
+
              </div>
         </div>
+        </>
     )
 }
 
