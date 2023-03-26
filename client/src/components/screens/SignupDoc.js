@@ -83,7 +83,7 @@ const SignupDoc=()=>{
         <div className="mycard">
  <div className="card auth-card input-field bg-body">
               
-            <h2>Healthy</h2>
+            <h2>PsychoCorp</h2>
               <input
               className="ip"
               type="text"
