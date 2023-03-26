@@ -27,6 +27,7 @@ import Teen from './components/screens/Teen';
 import Lgbtq from './components/screens/Lgbtq';
 import CreateSuccess from './components/screens/CreateSuccess';
 import Footer from './components/Footer';
+import Chat from "./components/screens/Chat"
 export const UserContext = createContext()
 
 const Routing = ()=>{
@@ -58,6 +59,21 @@ const Routing = ()=>{
         <Route exact path="/signup" element={<SignUp />} />
         <Route exact path="/profile/:userid" element={<UserProfile />} /> 
         <Route exact path="/reset" element={<Reset />} />
+
+        <Route path="/reset/:token" element={<NewPassword />} /> 
+        <Route path="/addiction" element={<Addiction/>}/>
+        <Route path="/anxiety" element={<Anxiety/>}/>
+        <Route path="/depression" element={<Depression/>}/>
+        <Route path="/hiv" element={<Hiv/>}/>
+        <Route path="/family" element={<Family/>}/>
+        <Route path="/ocd" element={<Ocd/>}/>
+        <Route path="/teen" element={<Teen/>}/>
+        <Route path="/lgbtq" element={<Lgbtq/>}/>
+        <Route path="/createSuccess" element={<CreateSuccess/>}/>
+        <Route path="/docreset" element={<DocReset/>}/>
+        <Route path="/docreset/:token" element={<DocNewPassword/>}/>
+        <Route path="/chat" element={<Chat /> } /> 
+
         <Route exact path="/reset/:token" element={<NewPassword />} /> 
         <Route exact path="/addiction" element={<Addiction/>}/>
         <Route exact path="/anxiety" element={<Anxiety/>}/>
@@ -70,6 +86,7 @@ const Routing = ()=>{
         <Route exact path="/createSuccess" element={<CreateSuccess/>}/>
         <Route exact path="/docreset" element={<DocReset/>}/>
         <Route exact path="/docreset/:token" element={<DocNewPassword/>}/>
+
     </Routes>
   )
 }

@@ -21,6 +21,7 @@ const NavBar = () => {
           <li key="1"><i  data-target="modal1" className="large material-icons modal-trigger" style={{color:"black"}}>search</i></li>,
           <li key="2"><Link to="/profile">Profile</Link></li>,
         <li key="3"><Link to="/createSuccess">Create Success Story</Link></li>,
+        <li key="8"><Link to="../chat"> <i className="material-icons">chat</i> </Link></li>,
           <li key="4">
             <button className="btn #c62828 red darken-3"
               onClick={() => {
@@ -41,7 +42,8 @@ const NavBar = () => {
           // <li key="2"><Link to="/profile/doctor">Profile</Link></li>,
           <li key="3"><Link to="/paitent">upcoming paitent</Link></li>,
           <li key="4"><Link to="/my ">Prev paitents</Link></li>,
-          <li key="5">
+          <li key="5"><Link to="../chat"> <i className="material-icons">chat</i> </Link></li>,
+          <li key="6">
             <button className="btn #c62828 red darken-3"
               onClick={() => {
                 localStorage.clear()
