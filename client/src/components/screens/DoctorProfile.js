@@ -20,7 +20,7 @@ const Profile=()=>{
             console.log(result)
             setProfile(result)
             setRating(result.rating)
-            setNum(result.ratingNo)
+            setNum(result.totalRating)
         })
     },[state,rating])     /// debug here we use to debug loading error without it it not showing proper doctorprofile 
 
@@ -62,7 +62,7 @@ const Profile=()=>{
         console.log(data)
             setProfile(data)
             setRating(data.rating) 
-             setNum(data.ratingNo)
+             setNum(data.totalRating)
         })
     }
     const unfollowUser = ()=>{
@@ -140,7 +140,7 @@ backgroundColor:"rgba(131, 217, 231, 0.1)",
                       </button>
 
                       }
-                      <h6>Current Rating {rating}</h6>
+                      <h6>Current Rating {rating?rating:1}</h6>
                       <button style={{
                          margin:"10px"
                      }} className="btn waves-effect waves-light #64b5f6 blue darken-1"

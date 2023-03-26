@@ -89,7 +89,7 @@ router.put('/doc/updatepic',requireLoginDoc,(req,res)=>{
 
 //rate the doctor
 router.put('/rating',requireLogin,(req,res)=>{
-    Doctor.findByIdAndUpdate(req.body.docid,{$set:{rating:req.body.rate,ratingNo:req.body.n}},{new:true},
+    Doctor.findByIdAndUpdate(req.body.docid,{$set:{rating:req.body.rate,totalRating :req.body.n}},{new:true},
         (err,result)=>{
          if(err){
              return res.status(422).json({error:"pic cannot post"})
