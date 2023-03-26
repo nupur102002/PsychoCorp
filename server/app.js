@@ -1,7 +1,7 @@
 //jshint esversion:6
 const express = require("express");
 const app = express();
-const mongoose = require("mongoose");
+var mongoose = require("mongoose");
 const PORT = 5000;
 const {MONGOURI} = require('./keys');
 
@@ -23,19 +23,21 @@ app.use(
     
 
  require('./models/user');
- require('./models/doctor');
- require('./models/story');
+ require("./models/recipe");
  require("./models/ChatModel");
  require("./models/MessageModel");
- app.use(express.json());
- const messageroute =require("./routes/messageroute");
  
+ app.use(express.json());
+
+
+ const messageroute =require("./routes/messageroute");
+ const chatroute = require("./routes/ChatRoute");
 
  app.use(require('./routes/auth'));
+ app.use(require('./routes/recipe'));
  app.use(require('./routes/user'));
- app.use(require('./routes/doctor'));
- app.use(require('./routes/story'));
- app.use(require('./routes/ChatRoute'));
+
+ app.use('/chat',chatroute)
  app.use('/message',messageroute) 
 
 app.listen(PORT,()=>{
